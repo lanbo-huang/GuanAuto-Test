@@ -16,7 +16,8 @@ def purchase(base_url,api,headers,data,method,type):
         except Exception as e:
             f.write(e)
             f.write("\n")
-
+def Request(method,url,data):
+    r = requests.request(method=method,url=url,data=data)
 
 if __name__ == "__main__":
     date = time.strftime("%Y-%m-%d")  # 日期年月日

@@ -32,7 +32,7 @@ def Get_bugs(versions):
 
 
 jira =JIRA(server='http://39.108.220.162:8888',basic_auth=('huangwangyuan','a123456'))
-versions=["川海学院V2.0.0","观后台V1.0.0","观基础版APP.V1.0.0"]
+versions=["川海学院V2.0.0","观后台V1.0.0"]
 Get_bugs(versions)
 
 
