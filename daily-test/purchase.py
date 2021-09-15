@@ -2,14 +2,14 @@ import requests,json,time,datetime,random,pymysql,root
 class Purchase():
     def __init__(self):
         "基础信息"
-        self.phone_stf = time.strftime("%Y%m%d") #手机号后八位的定义,用于手机号拼接及客户姓名的拼接
+        self.phone_stf = time.strftime("%d%H%M%S") #手机号后八位的定义,用于手机号拼接及客户姓名的拼接
         self.assumpsitDate = (datetime.datetime.now()+datetime.timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S") #约看日期
         self.url ="https://pre.guan.yatonghui.com" #请求域名
         self.api ="/api/verification/code/1/" #获取验证码接口
         self.purchase_prj="1274716042220154882" #报备项目ID,621项目
         self.purchase_transfer_prj="1271096380915961858" #转介的项目ID，611项目
         self.headers={
-            'Eaton-Origin': 'H5',
+            'Eaton-Origin': 'STANDARDH5',
             'Eaton-Company-CODE': 'CSGS',
             'Content-Type': 'application/json;charset=UTF-8',
             'Eaton-ORG-ID': '1197540232292413442',
@@ -23,7 +23,7 @@ class Purchase():
         sql_2 = "delete from cust_info where  corp_id='201900078712012912' and cod_cust_phone like '%" + self.phone_stf + "'"
         root.delete_data(sql_2)
         # 3、删除外场客户
-        sql_3 = "delete from rea_customer_info where  corp_id='201900078712012912' and cod_cust_phone like '%" + self.phone_stf + "'"
+        sql_3 = "delete from rea_customer_info where  corp_id='201900078712012912' and cod_cust_phone like'%" + self.phone_stf + "'"
         root.delete_data(sql_3)
         # 4、删除全民客户
         sql_4 = "delete from whole_customer where  company_id='201900078712012912' and phone like '%" + self.phone_stf + "'"
@@ -32,25 +32,25 @@ class Purchase():
     def login(self,phone="13300000014"):
         "默认内场销售登录"
         api_login = "/api/login"  # 登录接口
-        data = {'phone': phone,'code': '6666','loginType': '2'}
-        requests.get(url=self.url + self.api + phone, headers=self.headers)  # 获取验证码
+        data = {'phone': phone,'code': '6666','loginType': '6'}
+        requests.get(url=self.url + self.api + phone, headers=self.headers,verify=False)  # 获取验证码
         # 获取token值
-        re = requests.post(url=self.url + api_login, headers=self.headers, data=json.dumps(data)).json()
+        re = requests.post(url=self.url + api_login, headers=self.headers, data=json.dumps(data),verify=False).json()
         token = re["data"]
         self.headers["X-Access-Token"] = token
 
     def login_wp(self,phone="19400000014"):
         api_login = "/api/whole/login"  # 登录接口
         data = { 'phone': phone,'code': '6666'}
-        requests.get(url=self.url + self.api + phone, headers=self.headers)  # 获取验证码
+        requests.get(url=self.url + self.api + phone, headers=self.headers,verify=False)  # 获取验证码
         # 获取token值
-        re = requests.post(url=self.url + api_login, headers=self.headers, data=json.dumps(data)).json()
+        re = requests.post(url=self.url + api_login, headers=self.headers, data=json.dumps(data),verify=False).json()
         token = re["data"]
         self.headers["X-Access-Token"] = token
 
     def Request(self,method,headers,url,data):
         try:
-            re = requests.request(method=method,headers=headers,url=url,data=json.dumps(data)).json()
+            re = requests.request(method=method,headers=headers,url=url,data=json.dumps(data),verify=False).json()
             result = re['msg']
             if result == 'OK':
                 return 1
@@ -313,7 +313,8 @@ class Purchase():
             print("1、报备成功  客户姓名:{0},手机号:{1}".format(namCustZh, codCustPhone))
 
 if __name__ =="__main__":
-    Purchase().del_data()
+    #Purchase().del_data()
+    requests.packages.urllib3.disable_warnings()
     Purchase().NaturalPurchase()
     Purchase().TokerPurchase()
     Purchase().TransferPurchase()

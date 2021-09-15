@@ -1,34 +1,34 @@
-import requests,json,time,datetime
-def purchase(base_url,api,headers,data,method,type):
-    with open("D:\GuanAPI-master\daily-test\guan.txt","a") as f:
-        try:
-            s = requests.Session()
-            re = s.request(url=base_url+api,headers=headers,data=json.dumps(data),method=method).json()
-            result = re['msg']
-            if result == "ok":
-                print(type)
-                f.write(type)
-                f.write("\n")
-            else:
-                print(result)
-                f.write(result)
-                f.write("\n")
-        except Exception as e:
-            f.write(e)
-            f.write("\n")
-def Request(method,url,data):
-    r = requests.request(method=method,url=url,data=data)
+import requests,json,time,datetime,root
 
-if __name__ == "__main__":
-    date = time.strftime("%Y-%m-%d")  # 日期年月日
-    phone_stf = time.strftime("%Y%m%d")  # 手机号后八位的定义,用于手机号拼接及客户姓名的拼接
-    assumpsitDate = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S")
-    url = "https://test.guan.yatonghui.com"
-    api = "/api/verification/code/1/"  # 获取验证码接口
+def Request(method,api,phone,data=None,params=None,company="CSGS",port="H5"):
+    #登录
+    url = "https://guan.yatonghui.com"
     headers = {
-        'Eaton-Origin': 'H5',
-        'Eaton-Company-CODE': 'CSGS',
+        'Eaton-Origin': port,
+        'Eaton-Company-CODE': company,
         'Content-Type': 'application/json;charset=UTF-8',
-        'Eaton-ORG-ID': '1197540232292413442',
-        'Eaton-Project-ID': '1274716042220154882'}  # h5-onine接口报备时，必须带的头部信息，报备的项目id
+        'Eaton-Project-ID': '1274716042220154882' }#项目ID
+    sql = "select org_id from base_employee where mobile_phone=" + phone + " and company_name ="+ "'测试公司'"
+    org_id = root.get_id(sql)
+    headers['Eaton-ORG-ID'] = str(org_id)
 
+    api_login = "/api/login"  # 登录接口
+    api_verify = "/api/verification/code/1/"  # 获取验证码接口
+    data_1 = {'phone': phone, 'code': '6666', 'loginType': '2'}
+
+    requests.get(url=url + api_verify + phone, headers=headers)  # 获取验证码
+    # 获取token值
+    re = requests.post(url=url + api_login, headers=headers, data=json.dumps(data_1)).json()
+    #print(re)
+    token = re["data"]
+    headers["X-Access-Token"] = token
+    #发起请求
+    r = requests.request(method=method,headers=headers,params=params,url=url+api,data=json.dumps(data)).json()
+    print(r)
+
+    print(r['msg'])
+
+if __name__ =="__main__":
+    api ="/api/biz/h5/out/customer/1292749237970178050"
+    params = {"id":"1288011357748662273"}
+    Request("get",api,"17704034087")

@@ -2,10 +2,13 @@ import requests
 import json
 import readxls
 class SendRequests():
+    """
+    默认登录发起请求，
+    """
     def __init__(self):
         self.url ="https://guan.yatonghui.com"
-        self.api="/api/verification/code/1/"
-        self.phone="17704034087"
+        self.api ="/api/verification/code/1/"
+        self.phone ="17704034087"
         self.headers ={
             'Eaton-Origin': 'H5',
             'Eaton-Company-CODE': 'CSGS',
@@ -17,7 +20,7 @@ class SendRequests():
             'code':'6666',
             'loginType':'2'
                 }
-        re = requests.get(url=self.url+self.api+self.phone,headers=self.headers)#获取验证码
+        requests.get(url=self.url+self.api+self.phone,headers=self.headers)#获取验证码
 
         #获取token值
         self.api_login="/api/login"
@@ -29,7 +32,7 @@ class SendRequests():
         try:
             # 从读取的表格中获取响应的参数作为传递
             method = apiData["method"]
-            url2 = apiData["url"]
+            api = apiData["url"]
             if apiData["data"] == "":
                 data = None
             else:
@@ -38,22 +41,9 @@ class SendRequests():
                 params = None
             else:
                 params =apiData["params"]
-                #print(type(data))
-                #print(data)
-            #print(method,self.url+url2,data)
-            re = s.request(method=method, url=self.url + url2, headers=self.headers,data=data,params=params)
 
-            # print(apiData["UseCase"],re.content.decode())
-            #print(method,re.content.decode())
+            re = s.request(method=method, url=self.url + api, headers=self.headers,data=data,params=params)
             return re
         except Exception as e:
             print(e)
 
-'''if __name__ =="__main__":
-    s=requests.session()
-    api_datas = readxls.ReadExcel('yatong_h5.xlsx').read_data()
-    n = len(api_datas)
-
-    for i in range(n):
-        api_data = api_datas[i]
-        SendRequests().sendRequests(s,api_data)'''
