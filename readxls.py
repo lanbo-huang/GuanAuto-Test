@@ -7,6 +7,7 @@ class ReadExcel():
         self.ncols= self.table.ncols
 
     def read_data(self):
+        #返回每一行的数据
         if self.nrows >1:
             keys = self.table.row_values(0)#d第一行表头信息
             list_api_data =[]

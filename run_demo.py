@@ -9,6 +9,8 @@ import sendmail
 from newReport import new_report
 from HTMLTestRunner import HTMLTestRunner
 
+from ExceptHookHandler import ExceptHookHandler as ehh
+
 def add_case(test_path=os.path.dirname(__file__)):
     """加载所有的测试用例"""
     discover = unittest.defaultTestLoader.discover(test_path, pattern='*case.py')
@@ -27,5 +29,6 @@ def run_case(all_case,result_path=setting.TEST_REPORT):
     sendmail.send_mail(report) #调用发送邮件模块
 
 if __name__ =="__main__":
+    EHH = ehh()
     cases = add_case()
     run_case(cases)

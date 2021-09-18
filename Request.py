@@ -34,9 +34,8 @@ class Request():
         #发起请求
         #print(method, url+api, phone, data, params,headers)
         r = requests.request(method=method,headers=headers,params=params,url=url+api,data=json.dumps(data)).json()
-
-
         print(r['msg'])
+
 
     def sendRequests(self, apiData):
         try:

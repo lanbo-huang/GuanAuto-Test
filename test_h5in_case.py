@@ -26,6 +26,7 @@ class Guan_API(unittest.TestCase):
     def test_api(self,data):
         print("******* 正在执行用例 ->{0} *********".format(data['ID']))
         print("请求方式: {0}，请求URL: {1}".format(data['method'],data['url']))
+        #print("请求头：{0}".format(data["headers"]))
         print("请求参数：{0}".format(data["params"]))
         print("post请求体data数据：{0}".format(data["data"]))
         # 发送请求
