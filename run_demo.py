@@ -16,6 +16,7 @@ def add_case(test_path=os.path.dirname(__file__)):
     discover = unittest.defaultTestLoader.discover(test_path, pattern='*case.py')
     return discover
 
+
 def run_case(all_case,result_path=setting.TEST_REPORT):
     """执行所有的测试用例"""
     now = time.strftime("%Y-%m-%d %H_%M_%S")
@@ -31,4 +32,10 @@ def run_case(all_case,result_path=setting.TEST_REPORT):
 if __name__ =="__main__":
     EHH = ehh()
     cases = add_case()
-    run_case(cases)
+
+    #第一种用HTML形式跑测试用例
+    #run_case(cases)
+
+    #第二种直接用unittest框架自带方法跑,方便调试
+    runner = unittest.TextTestRunner()
+    runner.run(cases)

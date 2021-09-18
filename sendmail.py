@@ -58,4 +58,4 @@ def send_mail(file_new):
     except Exception as  e:
         print("失败: " + str(e))
 
-#send_mail("test.py")
+#send_mail("Warning.py")
