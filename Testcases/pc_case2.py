@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-# _*_ coding:utf-8 _*_
-__author__ = 'HWY'
 
 import os,sys
 
@@ -10,9 +8,10 @@ from readxls import ReadExcel
 from send_request import SendRequests
 
 
-path = os.path.dirname(os.path.dirname(__file__))
 
-testData = ReadExcel(path +'\Testapis\yatong_h5_in.xlsx').read_data()#以行的方式，读取具体的xlsx文件，所有的api信息存储在这里
+
+path = os.path.dirname(os.path.dirname(__file__))
+testData = ReadExcel(path +'\Testapis\yatong_pc.xlsx').read_data()#以行的方式，读取具体的xlsx文件，所有的api信息存储在这里
 
 
 @ddt.ddt
@@ -30,7 +29,7 @@ class Guan_API(unittest.TestCase):
         print("请求参数：{0}".format(data["params"]))
         print("post请求体data数据：{0}".format(data["data"]))
         # 发送请求
-        re = SendRequests("13200000112").sendRequests(self.s,data)
+        re = SendRequests("13700000100").sendRequests(self.s,data)
         # 获取服务端返回的值
         self.result = re.json()
         print("页面返回信息：%s" % re.content.decode("utf-8"))
@@ -45,7 +44,7 @@ class Guan_API(unittest.TestCase):
 
         if self.result["code"]!=0 or self.result["msg"]!="OK":
             NOT_data = "FAIL"
-            #breakpoint()
+            breakpoint()
             print("用例测试结果:  {0}---->{1}".format(data['UseCase'], NOT_data))
 
         self.assertEqual(self.result['code'], readData_code, "返回实际结果是->:%s" % self.result['code'])

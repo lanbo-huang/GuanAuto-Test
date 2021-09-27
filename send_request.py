@@ -1,5 +1,6 @@
 import requests,json
 from jsonpath_rw import  parse
+
 from requests_toolbelt.utils import dump
 
 
@@ -91,9 +92,6 @@ class SendRequests():
         return headers
 
 
-
-
-
     def sendRequests(self, s, apiData):
         try:
             # 从读取的表格中获取响应的参数作为传递
@@ -110,27 +108,92 @@ class SendRequests():
             else:
                 params =json.loads(apiData["params"])
 
-            if apiData["headertype"] == "nomal":
-                headers = self.get_token("h5",self.phone)
-            elif apiData["headertype"] == "ideamark":
-                headers = self.get_idea_mark_headers("h5",self.phone)
-            elif apiData["headertype"] == "unlogin":
-                headers = self.header
+            if apiData["logintype"] == "h5":
+
+                if apiData["headertype"] == "nomal":
+                    headers = self.get_token("h5",self.phone)
+                elif apiData["headertype"] == "ideamark":
+                    headers = self.get_idea_mark_headers("h5",self.phone)
+                elif apiData["headertype"] == "unlogin":
+                    headers = self.header
+                else:
+                    headers = self.get_projectid_headers("h5",self.phone)
+                print(headers)
+
+
+                re = s.request(method=method, url=self.url + api, headers=headers,data=data,params=params)
+                #print(dump.dump_all(re).decode("utf-8"))
+                #print(re.url)
+                return re
+
             else:
-                headers = self.get_projectid_headers("h5",self.phone)
-            print(headers)
-            re = s.request(method=method, url=self.url + api, headers=headers,data=data,params=params)
-            #print(dump.dump_all(re).decode("utf-8"))
-            #print(re.url)
-            return re
+
+                if apiData["headertype"] == "nomal":
+                    headers = self.get_token("pc",self.phone)
+                elif apiData["headertype"] == "ideamark":
+                    headers = self.get_idea_mark_headers("pc",self.phone)
+                elif apiData["headertype"] == "unlogin":
+                    headers = self.header
+                else:
+                    headers = self.get_projectid_headers("pc",self.phone)
+                print(headers)
+                re = s.request(method=method, url=self.url + api, headers=headers,data=data,params=params)
+                #print(dump.dump_all(re).decode("utf-8"))
+                #print(re.url)
+                return re
         except Exception as e:
             print(e)
+
+
+    def newsendRequests(self,s,logintype,headertype,api,method,params,data):
+
+        '''if params =="":
+            params = None
+        else:
+            params = json.loads(params)
+
+        if data == "":
+            data = None
+        else:
+            data = data.encode("utf-8")'''
+
+
+        if logintype == "h5":
+            if headertype == "nomal":
+                headers = self.get_token("h5", self.phone)
+            elif headertype == "ideamark":
+                headers = self.get_idea_mark_headers("h5", self.phone)
+            elif headertype == "unlogin":
+                headers = self.header
+            else:
+                headers = self.get_projectid_headers("h5", self.phone)
+
+            re = s.request(url = self.url+api,method=method,headers=headers,params=params,data=data)
+            return re
+
+        else:
+            if headertype == "nomal":
+                headers = self.get_token("pc", self.phone)
+            elif headertype == "ideamark":
+                headers = self.get_idea_mark_headers("pc", self.phone)
+            elif headertype == "unlogin":
+                headers = self.header
+            else:
+                headers = self.get_projectid_headers("pc", self.phone)
+            re = s.request(url=self.url + api, method=method, headers=headers, params=params, data=data)
+            return re
+
+
+
+
+
+
 
 
 
 #调试用
 if __name__ == "__main__":
-    s =SendRequests()
+    s =SendRequests("13300000108")
     params = {"code":"MCGS"}
     headers = s.get_projectid_headers("h5",s.phone)
     url = s.url + "/api/sys/base/organization/getOrgSimple"
