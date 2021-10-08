@@ -1,18 +1,18 @@
-import requests,json
+import requests,json,os
 from jsonpath_rw import  parse
-
 from requests_toolbelt.utils import dump
+
 
 
 class SendRequests():
     """
     默认登录发起请求，
     """
-    def __init__(self,phone):
-        self.url ="https://hotfix.guan.yatonghui.com"
-        #self.api ="/api/verification/code/1/"
-        self.header = {"Eaton-Company-CODE":"MCGS", "Eaton-Origin": "STANDARDH5",'Content-Type': 'application/json;charset=UTF-8'}
+    def __init__(self,environment,code,phone):
+        self.url ="https://"+environment+".guan.yatonghui.com"
+        #self.header = {"Eaton-Company-CODE":"MCGS", "Eaton-Origin": "STANDARDH5",'Content-Type': 'application/json;charset=UTF-8'}
         self.phone = phone
+        self.code = code
 
     def get_token(self,login_type,phone):
         """
@@ -26,7 +26,7 @@ class SendRequests():
             eaton_origin ="PC"
             login_Type = "2"
 
-        headers = {"Eaton-Company-CODE":"MCGS", "Eaton-Origin": eaton_origin,'Content-Type': 'application/json;charset=UTF-8'}
+        headers = {"Eaton-Company-CODE":self.code, "Eaton-Origin": eaton_origin,'Content-Type': 'application/json;charset=UTF-8'}
         data = {"code": "6666", "loginType": login_Type, "phone": phone}
 
         verif_code_api = "/api/verification/code/1/"
@@ -93,6 +93,7 @@ class SendRequests():
 
 
     def sendRequests(self, s, apiData):
+        #这个方法目前没用了
         try:
             # 从读取的表格中获取响应的参数作为传递
             method = apiData["method"]
@@ -115,7 +116,7 @@ class SendRequests():
                 elif apiData["headertype"] == "ideamark":
                     headers = self.get_idea_mark_headers("h5",self.phone)
                 elif apiData["headertype"] == "unlogin":
-                    headers = self.header
+                    headers = {"Eaton-Company-CODE":self.code, "Eaton-Origin": "STANDARDH5",'Content-Type': 'application/json;charset=UTF-8'}
                 else:
                     headers = self.get_projectid_headers("h5",self.phone)
                 print(headers)
@@ -133,7 +134,7 @@ class SendRequests():
                 elif apiData["headertype"] == "ideamark":
                     headers = self.get_idea_mark_headers("pc",self.phone)
                 elif apiData["headertype"] == "unlogin":
-                    headers = self.header
+                    headers = {"Eaton-Company-CODE":self.code, "Eaton-Origin": "PC",'Content-Type': 'application/json;charset=UTF-8'}
                 else:
                     headers = self.get_projectid_headers("pc",self.phone)
                 print(headers)
@@ -146,29 +147,19 @@ class SendRequests():
 
 
     def newsendRequests(self,s,logintype,headertype,api,method,params,data):
-
-        '''if params =="":
-            params = None
-        else:
-            params = json.loads(params)
-
-        if data == "":
-            data = None
-        else:
-            data = data.encode("utf-8")'''
-
-
         if logintype == "h5":
             if headertype == "nomal":
                 headers = self.get_token("h5", self.phone)
             elif headertype == "ideamark":
                 headers = self.get_idea_mark_headers("h5", self.phone)
             elif headertype == "unlogin":
-                headers = self.header
+                headers = {"Eaton-Company-CODE":self.code, "Eaton-Origin": "STANDARDH5",'Content-Type': 'application/json;charset=UTF-8'}
             else:
                 headers = self.get_projectid_headers("h5", self.phone)
 
             re = s.request(url = self.url+api,method=method,headers=headers,params=params,data=data)
+            #print(dump.dump_all(re).decode("utf-8"))
+            #print(re.url)
             return re
 
         else:
@@ -177,7 +168,7 @@ class SendRequests():
             elif headertype == "ideamark":
                 headers = self.get_idea_mark_headers("pc", self.phone)
             elif headertype == "unlogin":
-                headers = self.header
+                headers = {"Eaton-Company-CODE":self.code, "Eaton-Origin": "PC",'Content-Type': 'application/json;charset=UTF-8'}
             else:
                 headers = self.get_projectid_headers("pc", self.phone)
             re = s.request(url=self.url + api, method=method, headers=headers, params=params, data=data)
@@ -186,18 +177,8 @@ class SendRequests():
 
 
 
-
-
-
-
-
 #调试用
 if __name__ == "__main__":
-    s =SendRequests("13300000108")
-    params = {"code":"MCGS"}
-    headers = s.get_projectid_headers("h5",s.phone)
-    url = s.url + "/api/sys/base/organization/getOrgSimple"
-    res = requests.get(url,params=params,headers=headers)
-    print(res.content)
+    pass
 
 

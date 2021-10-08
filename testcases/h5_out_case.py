@@ -1,14 +1,13 @@
 #!/usr/bin/env python
-
 import os,sys,json
-
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 import unittest,requests,ddt
 from readxls import ReadExcel
 from send_request import SendRequests
-
+from configparser import ConfigParser
 from Depend import Depend
 from log import common
+
 
 
 
@@ -17,18 +16,26 @@ filename =  path + '\Testapis\yatong_h5_out.xlsx'
 testData = ReadExcel(filename).read_data()#以行的方式，读取具体的xlsx文件，所有的api信息存储在这里
 
 
+cf = ConfigParser()
+cf.read(path+"\config\config.ini",encoding="utf-8")
+code = cf.get("host","code")
+environment = cf.get("host","environment")
+phone = cf.get("logintype","h5_out")
+
+
+
 
 @ddt.ddt
 class Guan_API(unittest.TestCase):
 
-    '''@classmethod
+    @classmethod
     def setUpClass(cls):
        cls.logs = common.Common().get_logs()
        cls.logs.debug('开始写入接口自动化测试用例')
 
     @classmethod
-    def tearDownClass(cls):l
-        cls.logs.debug('自动化接口用例结束')'''
+    def tearDownClass(cls):
+        cls.logs.debug('自动化接口用例结束')
 
 
     def setUp(self):
@@ -42,12 +49,10 @@ class Guan_API(unittest.TestCase):
         print("******* 正在执行用例 ->{0} *********".format(datas['ID']))
         print("请求方式：{0}".format(datas['method']))
         print("请求url：{0}".format(datas['url']))
-        #print("请求方式: {0}请求URL: {1}".format(datas['method'],datas['url']))
 
 
 
         # 发送请求
-        phone = "13300000110"
         method = datas["method"]
         api = datas["url"]
         logintype = datas["logintype"]
@@ -86,7 +91,7 @@ class Guan_API(unittest.TestCase):
 
         print("请求参数：{0}".format(params))
         print("请求体数据：{0}".format(data))
-        re = SendRequests(phone).newsendRequests(self.s,logintype,headertype,api,method,params,data)
+        re = SendRequests(environment,code,phone).newsendRequests(self.s,logintype,headertype,api,method,params,data)
         # 获取服务端返回的值
         self.result = re.json()
         print("返回结果：%s" % re.content.decode("utf-8"))

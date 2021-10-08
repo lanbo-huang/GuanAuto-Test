@@ -10,8 +10,9 @@ class Common():
         write_file.setLevel(logging.DEBUG)
         set_logs = logging.Formatter('%(asctime)s - %(filename)s - %(funcName)s - %(levelname)s - %(message)s')
         write_file.setFormatter(set_logs)
+
         pycharm_text = logging.StreamHandler()
         pycharm_text.setFormatter(set_logs)
         logs.addHandler(write_file)
-        logs.addHandler(pycharm_text)
+        #logs.addHandler(pycharm_text)
         return logs

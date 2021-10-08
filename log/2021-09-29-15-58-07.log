@@ -1,0 +1,20 @@
+2021-09-29 15:58:07,505 - h5_out_case.py - setUpClass - DEBUG - 开始写入接口自动化测试用例
+2021-09-29 15:58:07,517 - connectionpool.py - _new_conn - DEBUG - Starting new HTTPS connection (1): pre.guan.yatonghui.com:443
+2021-09-29 15:58:07,918 - connectionpool.py - _make_request - DEBUG - https://pre.guan.yatonghui.com:443 "GET /api/verification/code/1/13300000110 HTTP/1.1" 200 74
+2021-09-29 15:58:07,925 - connectionpool.py - _new_conn - DEBUG - Starting new HTTPS connection (1): pre.guan.yatonghui.com:443
+2021-09-29 15:58:08,318 - connectionpool.py - _make_request - DEBUG - https://pre.guan.yatonghui.com:443 "POST /api/login HTTP/1.1" 200 104
+2021-09-29 15:58:08,347 - connectionpool.py - _new_conn - DEBUG - Starting new HTTPS connection (1): pre.guan.yatonghui.com:443
+2021-09-29 15:58:08,685 - connectionpool.py - _make_request - DEBUG - https://pre.guan.yatonghui.com:443 "GET /api/sys/base/employee/profile?%7B%22orgId%22:%20%22%22%7D HTTP/1.1" 200 None
+2021-09-29 15:58:08,721 - connectionpool.py - _new_conn - DEBUG - Starting new HTTPS connection (1): pre.guan.yatonghui.com:443
+2021-09-29 15:58:09,041 - connectionpool.py - _make_request - DEBUG - https://pre.guan.yatonghui.com:443 "GET /api/verification/code/1/13300000110 HTTP/1.1" 200 74
+2021-09-29 15:58:09,051 - connectionpool.py - _new_conn - DEBUG - Starting new HTTPS connection (1): pre.guan.yatonghui.com:443
+2021-09-29 15:58:09,443 - connectionpool.py - _make_request - DEBUG - https://pre.guan.yatonghui.com:443 "POST /api/login HTTP/1.1" 200 104
+2021-09-29 15:58:09,462 - connectionpool.py - _new_conn - DEBUG - Starting new HTTPS connection (1): pre.guan.yatonghui.com:443
+2021-09-29 15:58:09,924 - connectionpool.py - _make_request - DEBUG - https://pre.guan.yatonghui.com:443 "GET /api/sys/base/employee/profile?%7B%22orgId%22:%20%22%22%7D HTTP/1.1" 200 None
+2021-09-29 15:58:09,999 - connectionpool.py - _new_conn - DEBUG - Starting new HTTPS connection (1): pre.guan.yatonghui.com:443
+2021-09-29 15:58:10,331 - connectionpool.py - _make_request - DEBUG - https://pre.guan.yatonghui.com:443 "GET /api/verification/code/1/13300000110 HTTP/1.1" 200 74
+2021-09-29 15:58:10,338 - connectionpool.py - _new_conn - DEBUG - Starting new HTTPS connection (1): pre.guan.yatonghui.com:443
+2021-09-29 15:58:10,609 - connectionpool.py - _make_request - DEBUG - https://pre.guan.yatonghui.com:443 "POST /api/login HTTP/1.1" 200 104
+2021-09-29 15:58:10,629 - connectionpool.py - _new_conn - DEBUG - Starting new HTTPS connection (1): pre.guan.yatonghui.com:443
+2021-09-29 15:58:10,838 - connectionpool.py - _make_request - DEBUG - https://pre.guan.yatonghui.com:443 "GET /api/sys/base/employee/profile?%7B%22orgId%22:%20%22%22%7D HTTP/1.1" 200 None
+2021-09-29 15:58:10,856 - h5_out_case.py - tearDownClass - DEBUG - 自动化接口用例结束

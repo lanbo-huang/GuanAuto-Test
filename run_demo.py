@@ -31,8 +31,8 @@ if __name__ =="__main__":
     cases = add_case()
 
     #第一种用HTML形式跑测试用例
-    run_case(cases)
+    #run_case(cases)
 
     #第二种直接用unittest框架自带方法跑,方便调试
-    '''runner = unittest.TextTestRunner()
-    runner.run(cases)'''
+    runner = unittest.TextTestRunner()
+    runner.run(cases)

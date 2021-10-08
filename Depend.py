@@ -1,12 +1,20 @@
 from send_request import SendRequests
 from readxls import ReadExcel
 from jsonpath_rw import  parse
-import requests,json
+from configparser import  ConfigParser
+import requests,json,os
+
+
+path = os.path.dirname(__file__)
+cf = ConfigParser()
+cf.read(path+"\config\config.ini",encoding="utf-8")
+code = cf.get("host","code")
+environment = cf.get("host","environment")
 
 class Depend():
     def __init__(self,filename,phone):
         self.readxls = ReadExcel(filename)
-        self.send_request = SendRequests(phone)
+        self.send_request = SendRequests(environment,code,phone)
         self.phone = phone
 
 
