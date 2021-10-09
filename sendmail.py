@@ -32,21 +32,14 @@ def send_mail(file_new):
     msg.attach(msgtext)
     msg['Subject'] = "观系统H5_外场接口测试报告,测试请忽略!"
     msg['from'] = "huangwangyuan@szeaton.com"
-    #msg['to'] = "huangwangyuan@szeaton.com"
+
     #定义邮箱信息
-    #mail_host="smtp.qq.com"
     mail_host = "smtp.exmail.qq.com"
-    mail_pass="Hwy@2020"
+    mail_pass="TEiYtg2fEXAc3soM"
     sender="huangwangyuan@szeaton.com"
     #receivers=["huangwangyuan@szeaton.com","jiangcheng@szeaton.com","leilei@szeaton.com","liaojiahong@szeaton.com","wangkun@szeaton.com","dongfei@szeaton.com","gushiyang@szeaton.com"]
     receivers_02 = ["huangwangyuan@szeaton.com"]
     try:
-        '''server = smtplib.SMTP_SSL("smtp.exmail.qq.com",465)
-        server.connect("smtp.exmail.qq.com")
-        server.login("huangwangyuan@szeaton.com","Hwy@2020")
-        server.sendmail("huangwangyuan@szeaton.com","huangwangyuan@szeaton.com",msg.as_string())
-        server.quit()
-        print("邮件发送成功！")'''
         smtpObj = smtplib.SMTP_SSL(mail_host, 465)
         smtpObj.login(sender, mail_pass)
         smtpObj.sendmail(sender, receivers_02, msg.as_string())
@@ -54,5 +47,3 @@ def send_mail(file_new):
         print('邮件发送成功')
     except Exception as  e:
         print("失败: " + str(e))
-
-#send_mail("Warning.py")

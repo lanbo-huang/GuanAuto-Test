@@ -49,6 +49,6 @@ class ReadExcel():
 
 
 
-#list_api=ReadExcel("D:\Guanauto-test\GuanAuto-Test\testapis\yatong_h5_out.xlsx")
+#list_api=ReadExcel("D:\Guanauto-test\GuanAuto-Test\testapis\h5_out.xlsx")
 
 #print(list_api.get_row_data("test_out_2"))

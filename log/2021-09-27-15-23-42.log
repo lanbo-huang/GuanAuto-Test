@@ -1,8 +1,0 @@
-2021-09-27 15:23:42,687 - h5_out_case.py - setUpClass - DEBUG - 开始写入接口自动化测试用例
-2021-09-27 15:23:42,699 - connectionpool.py - _new_conn - DEBUG - Starting new HTTPS connection (1): hotfix.guan.yatonghui.com:443
-2021-09-27 15:23:42,944 - connectionpool.py - _make_request - DEBUG - https://hotfix.guan.yatonghui.com:443 "GET /api/sys/base/organization/getOrgSimple?code=MCGS HTTP/1.1" 200 None
-2021-09-27 15:23:42,948 - connectionpool.py - _new_conn - DEBUG - Starting new HTTPS connection (1): hotfix.guan.yatonghui.com:443
-2021-09-27 15:23:43,205 - connectionpool.py - _make_request - DEBUG - https://hotfix.guan.yatonghui.com:443 "GET /api/verification/code/1/13300000110 HTTP/1.1" 200 74
-2021-09-27 15:23:43,215 - connectionpool.py - _new_conn - DEBUG - Starting new HTTPS connection (1): hotfix.guan.yatonghui.com:443
-2021-09-27 15:23:43,526 - connectionpool.py - _make_request - DEBUG - https://hotfix.guan.yatonghui.com:443 "POST /api/login HTTP/1.1" 200 424
-2021-09-27 15:23:43,555 - connectionpool.py - _new_conn - DEBUG - Starting new HTTPS connection (1): hotfix.guan.yatonghui.com:443
